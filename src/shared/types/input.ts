@@ -16,28 +16,33 @@ export interface Position {
 
 export interface Draw {
     mode:DT,
+    time:number,
     id:string,
     color?:number
     pos?:Position
 }
 export interface DrawStart {
     mode:DT,
+    time:number,
     id:string,
     color:number,
     pos:Position
 }
 export interface DrawContinue {
     mode:DT,
+    time:number,
     id:string,
     pos:Position
 }
 export interface DrawFinish {
     mode:DT,
+    time:number,
     id:string,
     pos:Position
 }
 export interface DrawDelete {
     mode:DT,
+    time:number,
     id:string
 }
 
@@ -50,7 +55,12 @@ export interface Line {
 }
 
 export interface Whiteboard {
+    time:number,
     lines:Array<Line>
+}
+
+export interface Sync {
+    
 }
 
 export interface None {

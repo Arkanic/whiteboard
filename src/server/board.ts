@@ -52,10 +52,28 @@ class Board extends Serializable {
             }
         }
 
-        sendData(data);
+        data.time = Date.now();
+        this.sendData(data);
     }
 
-    handleSync()
+    handleSync(socket:io.Socket, data:input.Sync) {
+        let sync = this.createSync();
+        socket.emit(constants.msg.sync, sync);
+    }
+
+    createSync():input.Whiteboard {
+        return {
+            time: Date.now(),
+            lines: Object.values(this.lines).map(l => l.serialize())
+        }
+    }
+
+    sendData(data:any) {
+        Object.keys(this.sockets).forEach(id => {
+            const socket = this.sockets[id];
+            socket.emit(constants.msg.draw, data);
+        });
+    }
 }
 
 export default Board;
