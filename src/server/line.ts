@@ -1,12 +1,19 @@
 import * as input from "../shared/types/input";
+import Serializable from "./serializable";
 import Position from "./position";
 
-class Line {
+class Line extends Serializable {
+    id:string;
+    owner:string;
     finished:boolean;
     color:number;
     segments:Array<Position>;
 
-    constructor(color:number, start:Position) {
+    constructor(id:string, owner:string, color:number, start:Position) {
+        super();
+        
+        this.id = id;
+        this.owner = owner;
         this.finished = false;
         this.color = color;
         this.segments = [start];
@@ -23,6 +30,8 @@ class Line {
 
     serialize():input.Line {
         return {
+            id: this.id,
+            owner: this.owner,
             finished: this.finished,
             color: this.color,
             segments: this.segments

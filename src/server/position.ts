@@ -1,10 +1,13 @@
 import * as input from "../shared/types/input";
+import Serializable from "./serializable";
 
-class Position {
+class Position extends Serializable {
     x:number;
     y:number;
 
     constructor(x:number, y:number) {
+        super();
+        
         this.x = x;
         this.y = y;
     }

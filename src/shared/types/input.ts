@@ -42,6 +42,8 @@ export interface DrawDelete {
 }
 
 export interface Line {
+    id:string,
+    owner:string,
     finished:boolean,
     color:number,
     segments:Array<Position>
@@ -49,4 +51,8 @@ export interface Line {
 
 export interface Whiteboard {
     lines:Array<Line>
+}
+
+export interface None {
+
 }
