@@ -25,7 +25,7 @@ Promise.all([
         playMenu.classList.add("hidden");
 
         networking.startLine({
-            mode: "drawstart",
+            mode: input.DT.Start,
             id: "asdf",
             color: 0,
             time: Date.now(),

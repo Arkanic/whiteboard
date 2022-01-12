@@ -1,19 +1,23 @@
-import {createGenerator} from "ts-json-schema-generator";
+import path from "path";
+import * as tjs from "typescript-json-schema";
 import {Validator} from "jsonschema";
 
-const tsjInputConfig = {
-    path: "src/shared/types/draw.ts",
-    tsconfig: "tsconfig.json",
-    type: "*"
+const settings:tjs.PartialArgs = {
+    required: true
+}
+const compilerOptions:tjs.CompilerOptions = {
+    strictNullChecks: true
 }
 
-const generator = createGenerator(tsjInputConfig);
+const program = tjs.getProgramFromFiles([path.resolve("./src/shared/types/input.ts")], compilerOptions);
+const generator = tjs.buildGenerator(program, settings) as tjs.JsonSchemaGenerator;
+
 const validator = new Validator();
 
-
 export function validateInput(json:any, policy:string):boolean {
-    let schema = generator.createSchema(policy);
-    let validatorResult = validator.validate(json, schema.definitions![policy] as any);
+    let schema = generator.getSchemaForSymbol(policy);
+
+    let validatorResult = validator.validate(json, schema as any);
 
     return validatorResult.valid;
 }
