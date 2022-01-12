@@ -1,6 +1,7 @@
 import "./css/main.scss";
 
 import * as networking from "./ts/networking";
+import * as input from "../shared/types/input";
 
 import Logger from "./ts/logger";
 
@@ -22,5 +23,16 @@ Promise.all([
         networking.startGame({username:usernameInput.value});
         logger.log(`Game Started.`);
         playMenu.classList.add("hidden");
+
+        networking.startLine({
+            mode: "drawstart",
+            id: "asdf",
+            color: 0,
+            time: Date.now(),
+            pos: {
+                x: 0,
+                y: 0
+            }
+        });
     });
 }).catch(logger.error);

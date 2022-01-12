@@ -2,46 +2,39 @@ export interface Join {
     username:string
 }
 
-export enum DT {
-    Start = 0,
-    Continue,
-    Finish,
-    Delete
-}
-
 export interface Position {
     x:number,
     y:number
 }
 
 export interface Draw {
-    mode:DT,
+    mode:string,
     time:number,
     id:string,
     color?:number
     pos?:Position
 }
 export interface DrawStart {
-    mode:DT,
+    mode:string,
     time:number,
     id:string,
     color:number,
     pos:Position
 }
 export interface DrawContinue {
-    mode:DT,
+    mode:string,
     time:number,
     id:string,
     pos:Position
 }
 export interface DrawFinish {
-    mode:DT,
+    mode:string,
     time:number,
     id:string,
     pos:Position
 }
 export interface DrawDelete {
-    mode:DT,
+    mode:string,
     time:number,
     id:string
 }

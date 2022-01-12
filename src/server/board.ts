@@ -36,18 +36,18 @@ class Board extends Serializable {
     handleDraw(socket:io.Socket, data:input.Draw) {
         let pos = new Position(data.pos?.x as number, data.pos?.y as number);
 
-        if(data.mode == input.DT.Start) {
+        if(data.mode == "drawstart") {
             if(this.lines[data.id]) return;
             this.lines[data.id] = new Line(data.id, socket.id, data.color as number, pos);
         } else {
             if(this.lines[data.id].owner !== socket.id) return;
 
-            if(data.mode == input.DT.Continue) {
+            if(data.mode == "drawcontinue") {
                 this.lines[data.id].addSegment(pos);
-            } else if(data.mode == input.DT.Finish) {
+            } else if(data.mode == "drawfinish") {
                 this.lines[data.id].addSegment(pos);
                 this.lines[data.id].finish();
-            } else if(data.mode == input.DT.Delete) {
+            } else if(data.mode == "drawdelete") {
                 delete this.lines[data.id];
             }
         }
