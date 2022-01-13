@@ -48,3 +48,7 @@ export const startGame = (data:input.Join) => {
 export const startLine = (data:input.DrawStart) => {
     socket.emit(constants.msg.draw, data);
 }
+
+export const sync = (data:input.Sync) => {
+    socket.emit(constants.msg.sync, data);
+}

@@ -24,15 +24,6 @@ Promise.all([
         logger.log(`Game Started.`);
         playMenu.classList.add("hidden");
 
-        networking.startLine({
-            mode: input.DT.Start,
-            id: "asdf",
-            color: 0,
-            time: Date.now(),
-            pos: {
-                x: 0,
-                y: 0
-            }
-        });
+        networking.sync({});
     });
 }).catch(logger.error);
