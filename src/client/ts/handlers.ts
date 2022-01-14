@@ -3,13 +3,16 @@ import * as networking from "./networking";
 import * as state from "./state";
 import * as input from "../../shared/types/input";
 import * as mouse from "./input/mouse";
+import * as render from "./render";
 
 export function handleSync(data:input.Whiteboard) {
-    console.log(data);
+    state.handleSync(data);
+    render.renderBoard();
 }
 
 export function handleDraw(data:input.Draw) {
     state.newData(data);
+    render.renderBoard();
 }
 
 let currentlyDrawing = false;
@@ -17,7 +20,7 @@ let currentID = nanoid();
 export function handleMouseChange(data:mouse.MouseData) {
     if(currentlyDrawing) {
         if(data.lastModified == mouse.MouseLM.Position) {
-            networking.draw({
+            let d = {
                 mode: input.DT.Continue,
                 time: Date.now(),
                 id: currentID,
@@ -25,9 +28,13 @@ export function handleMouseChange(data:mouse.MouseData) {
                     x: data.mouseX,
                     y: data.mouseY
                 }
-            } as input.DrawContinue);
+            } as input.DrawContinue;
+
+            networking.draw(d);
+            state.newClientData(d);
+
         } else if(data.lastModified == mouse.MouseLM.Clicking && !data.clicking) {
-            networking.draw({
+            let d = {
                 mode: input.DT.Finish,
                 time: Date.now(),
                 id: currentID,
@@ -35,12 +42,16 @@ export function handleMouseChange(data:mouse.MouseData) {
                     x: data.mouseX,
                     y: data.mouseY
                 }
-            } as input.DrawFinish);
+            } as input.DrawFinish;
+
+            networking.draw(d);
+            state.newClientData(d);
+
             currentlyDrawing = false;
         }
     } else if(data.lastModified == mouse.MouseLM.Clicking && data.clicking) {
         currentID = nanoid();
-        networking.draw({
+        let d = {
             mode: input.DT.Start,
             time: Date.now(),
             id: currentID,
@@ -49,7 +60,11 @@ export function handleMouseChange(data:mouse.MouseData) {
                 x: data.mouseX,
                 y: data.mouseY
             }
-        });
+        } as input.DrawStart;
+
+        networking.draw(d);
+        state.newClientData(d);
+        render.renderBoard();
         currentlyDrawing = true;
     }
 }

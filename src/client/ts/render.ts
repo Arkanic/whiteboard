@@ -1,5 +1,6 @@
-import {debounce} from "throttle-debounce";
+import {throttle, debounce} from "throttle-debounce";
 import * as menu from "./render/menu";
+import * as board from "./render/board";
 
 let canvas:HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("board");
 let ctx = canvas.getContext("2d")!;
@@ -15,6 +16,24 @@ function setDimensions() {
 setDimensions();
 window.addEventListener("resize", debounce(40, setDimensions));
 
+let rendering = false;
+export function renderBoard() {
+    throttle(1000/60, () => {
+        if(rendering) board.render(ctx, canvas);
+    });
+}
+
 let renderLoop = setInterval(() => {
     menu.render(ctx, canvas);
 }, 1000/60);
+
+export function startRendering() {
+    clearInterval(renderLoop);
+    rendering = true;
+}
+
+export function stopRendering() {
+    renderLoop = setInterval(() => {
+        menu.render(ctx, canvas);
+    }, 1000/60);
+}

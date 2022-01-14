@@ -4,7 +4,7 @@ import * as networking from "./ts/networking";
 import * as state from "./ts/state";
 import * as input from "../shared/types/input";
 import {startInputHandling, stopInputHandling} from "./ts/input";
-import * as rendering from "./ts/render";
+import * as render from "./ts/render";
 
 import Logger from "./ts/logger";
 
@@ -23,14 +23,12 @@ Promise.all([
     usernameInput.focus();
 
     playButton.addEventListener("click", () => {
+        networking.sync({});
         networking.startGame({username:usernameInput.value});
         logger.log(`Game Started.`);
         playMenu.classList.add("hidden");
 
         startInputHandling();
-
-        setInterval(() => {
-            console.log(state.getBoard());
-        }, 5000);
+        render.startRendering();
     });
 }).catch(logger.error);
