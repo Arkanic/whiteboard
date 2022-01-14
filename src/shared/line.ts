@@ -1,6 +1,6 @@
-import * as input from "../shared/types/input";
-import Serializable from "../shared/serializable";
-import Position from "../shared/position";
+import * as input from "./types/input";
+import Serializable from "./serializable";
+import Position from "./position";
 
 class Line extends Serializable {
     id:string;

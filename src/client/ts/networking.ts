@@ -25,6 +25,7 @@ export function connect() {
         logger.log("Starting handlers...");
 
         socket.on(constants.msg.sync, handlers.handleSync);
+        socket.on(constants.msg.draw, handlers.handleDraw);
 
         socket.on(constants.msg.kick, (data:any) => {
             disconnectMessage = data.message;
@@ -45,7 +46,7 @@ export const startGame = (data:input.Join) => {
     socket.emit(constants.msg.join, data);
 }
 
-export const startLine = (data:input.DrawStart) => {
+export const draw = (data:input.DrawStart | input.DrawContinue | input.DrawFinish | input.DrawDelete) => {
     socket.emit(constants.msg.draw, data);
 }
 

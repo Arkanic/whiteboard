@@ -1,7 +1,10 @@
 import "./css/main.scss";
 
 import * as networking from "./ts/networking";
+import * as state from "./ts/state";
 import * as input from "../shared/types/input";
+import {startInputHandling, stopInputHandling} from "./ts/input";
+import * as rendering from "./ts/render";
 
 import Logger from "./ts/logger";
 
@@ -24,6 +27,10 @@ Promise.all([
         logger.log(`Game Started.`);
         playMenu.classList.add("hidden");
 
-        networking.sync({});
+        startInputHandling();
+
+        setInterval(() => {
+            console.log(state.getBoard());
+        }, 5000);
     });
 }).catch(logger.error);

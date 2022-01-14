@@ -1,4 +1,4 @@
-import * as input from "../shared/types/input";
+import * as input from "./types/input";
 import Serializable from "./serializable";
 
 class Position extends Serializable {

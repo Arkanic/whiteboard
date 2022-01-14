@@ -1,4 +1,4 @@
-import * as types from "../shared/types/input";
+import * as types from "./types/input";
 
 abstract class Serializable {
     constructor() {

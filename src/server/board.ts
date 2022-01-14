@@ -4,10 +4,10 @@ import {nanoid} from "nanoid";
 import constants from "../shared/constants";
 import * as input from "../shared/types/input";
 
-import Serializable from "./serializable";
+import Serializable from "../shared/serializable";
 import User from "./user";
-import Line from "./line";
-import Position from "./position";
+import Line from "../shared/line";
+import Position from "../shared/position";
 
 class Board extends Serializable {
     sockets:{[key:string]:io.Socket};

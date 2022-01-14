@@ -1,6 +1,6 @@
 import * as handlers from "../handlers";
 
-enum MouseLM {
+export enum MouseLM {
     None = 0,
     Position,
     Clicking
