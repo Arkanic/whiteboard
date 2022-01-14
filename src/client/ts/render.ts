@@ -12,15 +12,14 @@ function setDimensions() {
     const scaleRatio = Math.max(1, 800 / window.innerWidth);
     canvas.width = scaleRatio * window.innerWidth;
     canvas.height = scaleRatio * window.innerHeight;
+    renderBoard();
 }
 setDimensions();
 window.addEventListener("resize", debounce(40, setDimensions));
 
 let rendering = false;
 export function renderBoard() {
-    throttle(1000/60, () => {
-        if(rendering) board.render(ctx, canvas);
-    });
+    if(rendering) board.render(ctx, canvas);
 }
 
 let renderLoop = setInterval(() => {
