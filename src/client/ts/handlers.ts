@@ -1,9 +1,12 @@
 import {nanoid} from "nanoid";
+import {htod} from "../../shared/hexdec";
 import * as networking from "./networking";
 import * as state from "./state";
 import * as input from "../../shared/types/input";
 import * as mouse from "./input/mouse";
 import * as render from "./render";
+
+let colorPicker:HTMLInputElement = <HTMLInputElement>document.getElementById("color-picker");
 
 export function handleSync(data:input.Whiteboard) {
     state.handleSync(data);
@@ -55,7 +58,7 @@ export function handleMouseChange(data:mouse.MouseData) {
             mode: input.DT.Start,
             time: Date.now(),
             id: currentID,
-            color: 0,
+            color: htod(colorPicker.value.substring(1)),
             pos: {
                 x: data.mouseX,
                 y: data.mouseY
